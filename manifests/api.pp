@@ -36,7 +36,7 @@ class aptly::api (
   Enum['none','log'] $log           = 'none',
   Boolean $enable_cli_and_http      = false,
   ) {
-  if $::operatingsystem == 'Ubuntu' and versioncmp($::operatingsystemrelease, '15.04') < 0 {
+  if $facts['os']['name'] == 'Ubuntu' and versioncmp($facts['os']['release']['full'], '15.04') < 0 {
     file { 'aptly-upstart':
       path    => '/etc/init/aptly-api.conf',
       content => template('aptly/etc/aptly-api.init.erb'),

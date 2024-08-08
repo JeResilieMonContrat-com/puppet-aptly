@@ -23,7 +23,7 @@
 #
 # [*release*]
 #   Distribution to mirror for.
-#   Default: `$::lsbdistcodename`
+#   Default: `$facts['os']['distro']['codename']`
 #
 # [*repos*]
 #   Components to mirror. If an empty array then aptly will default to
@@ -58,7 +58,7 @@ define aptly::mirror (
   Variant[String, Hash] $key = {},
   String $keyring            = '/etc/apt/trusted.gpg',
   String $filter             = '',
-  String $release            = $::lsbdistcodename,
+  String $release            = $facts['os']['distro']['codename'],
   Array $architectures       = [],
   Array $repos               = [],
   Boolean $with_sources      = false,
