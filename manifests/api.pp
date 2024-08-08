@@ -30,15 +30,12 @@
 #
 class aptly::api (
   Enum['stopped','running'] $ensure = running,
-  $user                             = 'root',
-  $group                            = 'root',
-  $listen                           = ':8080',
+  String $user                             = 'root',
+  String $group                            = 'root',
+  String $listen                           = ':8080',
   Enum['none','log'] $log           = 'none',
   Boolean $enable_cli_and_http      = false,
   ) {
-  validate_string($user, $group)
-  validate_re($listen, ['^([0-9.]*:[0-9]+$|unix:)'], 'Valid values for $listen: :port, <ip>:<port>, unix:///path')
-
   if $::operatingsystem == 'Ubuntu' and versioncmp($::operatingsystemrelease, '15.04') < 0 {
     file { 'aptly-upstart':
       path    => '/etc/init/aptly-api.conf',
